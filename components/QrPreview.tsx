@@ -73,8 +73,9 @@ const QrPreview: React.FC<QrPreviewProps> = ({ options, onSaveToHistory }) => {
     qrCode.download(downloadOptions);
   }, [qrCode, exportSize]);
 
-  const { frameOptions } = options;
+  const { frameOptions, shape } = options;
   const hasFrame = frameOptions && frameOptions.text && frameOptions.text.trim() !== '';
+  const isCircular = shape === 'circle';
 
   return (
     <Card className="flex flex-col items-center">
@@ -84,7 +85,10 @@ const QrPreview: React.FC<QrPreviewProps> = ({ options, onSaveToHistory }) => {
       <div
         id="qr-code-frame-container"
         className="inline-block p-4 rounded-lg transition-all"
-        style={{ background: hasFrame ? frameOptions.backgroundColor : 'transparent' }}
+        style={{ 
+          background: hasFrame ? frameOptions.backgroundColor : 'transparent',
+          borderRadius: isCircular && !hasFrame ? '9999px' : '0.5rem' // Make frame circular if QR is circular and there's no text frame
+        }}
       >
         {hasFrame && (
           <p
@@ -101,7 +105,7 @@ const QrPreview: React.FC<QrPreviewProps> = ({ options, onSaveToHistory }) => {
         )}
         <div
           ref={ref}
-          className="border border-dashed border-slate-300 dark:border-slate-600 rounded-lg shadow-inner flex items-center justify-center overflow-hidden bg-white"
+          className={`border border-dashed border-slate-300 dark:border-slate-600 shadow-inner flex items-center justify-center bg-white transition-all duration-300 ${isCircular ? 'rounded-full overflow-hidden' : 'rounded-lg'}`}
           style={{ width: options.width, height: options.height }}
         />
       </div>
@@ -135,9 +139,9 @@ const QrPreview: React.FC<QrPreviewProps> = ({ options, onSaveToHistory }) => {
           </div>
       </div>
       
-      {hasFrame && (
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-4 text-center max-w-xs">
-          Notă: Cadrul este un element vizual și nu va fi inclus în fișierul descărcat. Realizați o captură de ecran pentru a-l salva împreună cu codul QR.
+      {(hasFrame || isCircular) && (
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-4 text-center max-w-sm">
+          Notă: Cadrul și forma circulară sunt efecte vizuale. Fișierul descărcat va fi un cod QR pătrat. Realizați o captură de ecran pentru a salva imaginea exact cum o vedeți.
         </p>
       )}
     </Card>

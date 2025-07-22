@@ -276,6 +276,18 @@ const QrControls: React.FC<QrControlsProps> = ({ options, setOptions, onReset })
             <StyleSelect label="Stil Puncte" value={options.dotsOptions.type} onChange={v => handleOptionChange('dotsOptions.type', v)} options={DOT_STYLE_OPTIONS} />
             <StyleSelect label="Stil Colțuri (exterior)" value={options.cornersSquareOptions?.type || 'square'} onChange={v => handleOptionChange('cornersSquareOptions.type', v)} options={CORNER_STYLE_OPTIONS} />
             <StyleSelect label="Stil Colțuri (interior)" value={options.cornersDotOptions?.type || 'square'} onChange={v => handleOptionChange('cornersDotOptions.type', v)} options={CORNER_DOT_STYLE_OPTIONS} />
+            <hr className="my-4 border-slate-200 dark:border-slate-700" />
+            <div className="flex items-center justify-between">
+                <label htmlFor="shape-toggle" className="text-sm font-medium text-slate-600 dark:text-slate-300">Formă Circulară</label>
+                <button 
+                    role="switch" 
+                    aria-checked={options.shape === 'circle'} 
+                    onClick={() => handleOptionChange('shape', options.shape === 'circle' ? 'square' : 'circle')} 
+                    id="shape-toggle" 
+                    className={`${options.shape === 'circle' ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-600'} relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}>
+                    <span className={`${options.shape === 'circle' ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}/>
+                </button>
+            </div>
         </div>
       </Card>
       

@@ -56,6 +56,8 @@ export interface QrOptions {
   height: number;
   data: string;
   image?: string;
+  // New property to define the overall shape of the QR code.
+  shape: 'square' | 'circle';
   dotsOptions: DotOptions;
   backgroundOptions: BackgroundOptions;
   cornersSquareOptions?: CornersSquareOptions;

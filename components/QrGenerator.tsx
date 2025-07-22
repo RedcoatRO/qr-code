@@ -12,6 +12,7 @@ const INITIAL_QR_OPTIONS: QrOptions = {
   height: 300,
   // The default data for the QR code.
   data: 'https://www.upb.ro/',
+  shape: 'square', // Default shape is square.
   dotsOptions: {
     color: '#4267b2',
     type: 'rounded',
